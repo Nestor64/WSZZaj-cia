@@ -2,7 +2,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
-        "sap/ui/model/Filter",
+    "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator"
 ], (Controller, Fragment, MessageToast, Filter, FilterOperator) => {
     "use strict";
@@ -24,8 +24,9 @@ sap.ui.define([
         onInputLiveChange: function (oEvent) {
             let oInput = oEvent.getSource(),
                 sValue = oInput.getValue(),
-                phonePattern = /^\d{3}-\d{3}-\d{3}$/;  // Format: 123-456-789
-            emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Format: example@domain.com
+                phonePattern = /^\d{3}-\d{3}-\d{3}$/,  // Format: 123-456-789
+                emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                ibanPattern = /^PL[0-9]{26}$/; // Polish IBAN format
 
             if (oInput.getId() === this.createId("phoneInput")) {
                 if (!phonePattern.test(sValue)) {
@@ -40,6 +41,15 @@ sap.ui.define([
                 if (!emailPattern.test(sValue)) {
                     oInput.setValueState("Error");
                     oInput.setValueStateText("Invalid email format.");
+                } else {
+                    oInput.setValueState("None");
+                }
+            }
+
+            if (oInput.getId() === this.createId("ibanInput")) {
+                if (!ibanPattern.test(sValue)) {
+                    oInput.setValueState("Error");
+                    oInput.setValueStateText("Invalid IBAN format. Use format: PL + 26 digits");
                 } else {
                     oInput.setValueState("None");
                 }
@@ -74,7 +84,8 @@ sap.ui.define([
                 sLastName = oView.byId("lastNameInput").getValue(),
                 sPosition = oView.byId("positionInput").getValue(),
                 sEmail = oView.byId("emailInput").getValue(),
-                sPhone = oView.byId("phoneInput").getValue();
+                sPhone = oView.byId("phoneInput").getValue(),
+                sIban = oView.byId("ibanInput").getValue();
 
             if (!sFirstName || !sLastName || !sPosition) {
                 MessageToast.show("Please fill in required fields.");
@@ -88,6 +99,7 @@ sap.ui.define([
                 "Position": sPosition,
                 "Email": sEmail,
                 "Phone": sPhone,
+                "IBAN": sIban,
                 "Description": "Newly added employee."
             };
 
@@ -113,7 +125,8 @@ sap.ui.define([
                     "lastNameInput",
                     "positionInput",
                     "emailInput",
-                    "phoneInput"
+                    "phoneInput",
+                    "ibanInput"
                 ];
 
             aInputs.forEach(function (sInputId) {
@@ -192,6 +205,22 @@ sap.ui.define([
             if (oBinding) {
                 oBinding.filter(aFilters);
             }
+        },
+
+        onClearFilters: function() {
+            let oView = this.getView();
+            // Clear all filter inputs
+            oView.byId("idNameInput").setValue("");
+            oView.byId("idLastNameInput").setValue("");
+            oView.byId("idPositionInput").setValue("");
+            
+            // Clear filters from table
+            let oTable = oView.byId("table");
+            let oBinding = oTable.getBinding("items");
+            if (oBinding) {
+                oBinding.filter([]);
+            }
+            MessageToast.show("Here You go! Filters cleared");
         }
 
     });

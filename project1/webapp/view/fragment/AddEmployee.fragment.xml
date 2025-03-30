@@ -16,6 +16,9 @@
 
                 <Label text="Phone" />
                 <Input id="phoneInput" placeholder="123-456-789" liveChange="onInputLiveChange" />
+
+                <Label text="Bank Account (IBAN)" />
+                <Input id="ibanInput" placeholder="PL12345678901234567890123456" liveChange="onInputLiveChange" />
             </VBox>
         </content>
         <buttons>

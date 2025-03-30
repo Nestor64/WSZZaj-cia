@@ -8,14 +8,14 @@
             press="onBackPress"
             icon="sap-icon://nav-back"
             type="Transparent"
-            class="sapUiSmallMarginTop" />
+            class="sapUiSmallMarginTop blueButton" />
         
         <Button 
             text="Edit"
             press="onEditPress"
             visible="true"
             type="Emphasized"
-            class="sapUiSmallMarginTop" />
+            class="sapUiSmallMarginTop purpleButton" />
         
         <Panel headerText="{i18n>employeeDetails}" class="sapUiSmallMarginTop" expandable="false">
             <HBox>
@@ -43,6 +43,10 @@
                     <!-- Numer telefonu -->
                     <Text text="Numer telefonu: " />
                     <Input value="{employeeModel>/Phone}" type="Tel" editable="{=${editModel>/editMode} }"/>
+
+                    <!-- Bank Account -->
+                    <Text text="Bank Account (IBAN): " />
+                    <Input value="{employeeModel>/IBAN}" type="Text" editable="{=${editModel>/editMode} }"/>
                 </VBox>
             </HBox>
         </Panel>
@@ -53,8 +57,8 @@
 
         <!-- Przycisk Save oraz Cancel w trybie edycji -->
         <HBox visible="{${editModel>/editMode}}">
-            <Button text="Save" press="onSavePress"/>
-            <Button text="Cancel" press="onCancelPress"/>
+            <Button text="Save" press="onSavePress" class="blueButton"/>
+            <Button text="Cancel" press="onCancelPress" class="purpleButton"/>
         </HBox>
     </VBox>
     

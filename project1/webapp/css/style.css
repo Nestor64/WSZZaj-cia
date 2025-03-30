@@ -1,1 +1,31 @@
 /* Enter your custom styles here */
+
+.sapMBtn.purpleButton {
+    background-color: #9c27b0 !important;
+    border-color: #9c27b0 !important;
+    color: white !important;
+}
+
+.sapMBtn.blueButton {
+    background-color: #2196f3 !important;
+    border-color: #2196f3 !important;
+    color: white !important;
+}
+
+.customHeader {
+    background-color: #7b1fa2 !important;
+}
+
+.customHeader .sapMTitle {
+    color: white !important;
+}
+
+.customTable {
+    border: 2px solid #2196f3;
+    border-radius: 4px;
+}
+
+.customFilterBar {
+    background-color: #e3f2fd !important;
+    border-bottom: 2px solid #2196f3;
+}
